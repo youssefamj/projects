@@ -3,7 +3,6 @@ import random
 class Hangman:
 
     def __init__(self):
-
         self.words = ["book","dog","cat","facebook","appele"]
         self.word_to_guess = ""
         self.num_of_guesses = 5
