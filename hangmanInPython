@@ -1,0 +1,80 @@
+import random
+
+class Hangman:
+
+    def __init__(self):
+        self.words = ["mohamed", "youssef", "rachida", "hiba", "nour"]
+        self.word_to_guess = ""
+        self.num_of_guesses = 5
+        self.guessed_letters = []
+
+    def chose_word(self):
+        self.word_to_guess = random.choice(self.words)
+    
+    def verifie_guess(self,letter):
+
+        if letter in self.word_to_guess :
+
+            if letter in self.guessed_letters:
+                return False
+            else:
+                self.guessed_letters.append(letter)
+                return True 
+            
+        else:
+            self.num_of_guesses -= 1
+        
+    def display_word(self):
+
+        display = ''
+        for letter in self.word_to_guess:
+            if letter in self.guessed_letters:
+                display += letter
+            else:
+                display += "_"
+        return display
+    
+    def check_win(self):
+        return all(letter in self.guessed_letters for letter in self.word_to_guess)
+
+        
+    def check_lose(self):
+        if self.num_of_guesses == 0 :
+            return True
+
+def game():
+
+    hang = Hangman()
+    hang.chose_word()
+
+    print("Welcome to Hangman!")
+    print("Guess the word: " + hang.display_word())
+
+    while True:
+
+        guess = input("Enter a letter: ").lower()
+
+        if len(guess) != 1 or not guess.isalpha():
+            print("Invalid input. Please enter a single letter.")
+            continue
+
+        if hang.verifie_guess(guess):
+            print("\nGood job! You guessed it!\n")
+
+        else:
+            print('\nOops, that incorrect.\n')
+
+        print("Guess the word: " + hang.display_word())
+        print(f"Remaining guesses :{hang.num_of_guesses} ")
+
+        if hang.check_win():
+            print("Congratulations! You guessed the word correctly!")
+            break
+        
+        if hang.check_lose():
+            print("You lose")
+            break
+
+
+if __name__ == '__main__':
+    game()
